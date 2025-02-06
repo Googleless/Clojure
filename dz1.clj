@@ -3,7 +3,7 @@
   (filter even? (map #(* % 2) nums)))
 
 ;; вроде работает
-(even-times-two [1 2 3 4 5 6]) ; => (4 8 12)
+(println (even-times-two [1 2 3 4 5 6])) ; => (4 8 12)
 
 ;; #2 (e[skdg;jkdfxgldfg])
 (require '[clojure.spec.alpha :as s])
@@ -19,5 +19,5 @@
   (s/valid? ::user user))
 
 ;; вроде работает x2
-(valid-user? {::name "Иван" ::age 25 ::email "ivan@example.com"}) ; => true
-(valid-user? {::name "Анна" ::age 17 ::email "anna@bademail"})   ; => false
+(println(valid-user? {::name "Иван" ::age 25 ::email "ivan@example.com"})) ; => true
+(println(valid-user? {::name "Анна" ::age 17 ::email "anna@bademail"}))   ; => false
