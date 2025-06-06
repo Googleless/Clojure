@@ -8,6 +8,7 @@
 ;; (println "Факториал числа 5:" (factorial 5))
 
 ;; выше шпора
+(ns college.kt1)
 
 (defn quicksort [coll]
   (if (empty? coll)
@@ -35,7 +36,8 @@
 (defn read-number []
   (try 
     (Integer/parseInt (read-line)) 
-    (catch NumberFormatException e 
+    #_{:clj-kondo/ignore [:unused-binding]}
+    (catch NumberFormatException e
       (println "Неверный ввод. Введите число.")
       (read-number))))
 
