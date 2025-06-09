@@ -1,13 +1,12 @@
-(ns college.kt2
-  (:require [clojure.string :as str]))
+(ns college.kt2)
 
 ;; === Типы и данные ===
 
 (defrecord Position [x y])
 (defrecord PlotterState [position angle color carriage-state])
 
-(def ^:const carriage-up :up)
-(def ^:const carriage-down :down)
+(def ^:const carriage-up-state :up)
+(def ^:const carriage-down-state :down)
 
 (def ^:const color-black :черный)
 (def ^:const color-red :красный)
@@ -33,7 +32,7 @@
 
 (defn move [prt distance state]
   (let [new-pos (calc-new-position distance (:angle state) (:position state))]
-    (if (= (:carriage-state state) carriage-down)
+    (if (= (:carriage-state state) carriage-down-state)
       (draw-line prt (:position state) new-pos (:color state))
       (prt (format "Передвигаем на %d от точки (%d, %d)" distance (:x (:position state)) (:y (:position state)))))
     (assoc state :position new-pos)))
@@ -45,11 +44,11 @@
 
 (defn carriage-up [prt state]
   (prt "Поднимаем каретку")
-  (assoc state :carriage-state carriage-up))
+  (assoc state :carriage-state carriage-up-state))
 
 (defn carriage-down [prt state]
   (prt "Опускаем каретку")
-  (assoc state :carriage-state carriage-down))
+  (assoc state :carriage-state carriage-down-state))
 
 (defn set-color [prt color state]
   (prt (format "Устанавливаем %s цвет линии." (name color)))
@@ -93,10 +92,12 @@
         init-pos (->Position 0 0)
         init-color color-black
         init-angle 0
-        init-carriage carriage-up
+        init-carriage carriage-up-state
         init-state (initialize-plotter-state init-pos init-angle init-color init-carriage)
         state1 (draw-triangle printer-fn 100 init-state)
         state2 (set-position printer-fn (->Position 10 10) state1)
-        state3 (set-color printer-fn color-red state2)
-        state4 (draw-square printer-fn 80 state3)]
+        state3 (set-color printer-fn color-red state2)]
+    (draw-square printer-fn 80 state3)
     (println "Чертеж завершён.")))
+
+(-main)
